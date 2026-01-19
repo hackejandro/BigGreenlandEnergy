@@ -3,70 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Geopolitics Expert Flowchart</title>
+  <title>Big Greenland Energy™</title>
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.35;background:#0b0c10;color:#e9e9ef;}
-    .wrap{max-width:860px;margin:0 auto;padding:24px 16px 40px;}
-    header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px;}
-    h1{font-size:20px;margin:0;}
-    .sub{color:#a9adbd;font-size:13px;max-width:60ch;}
-    .card{border:1px solid rgba(255,255,255,0.12);border-radius:14px;background:rgba(255,255,255,0.03);padding:16px;}
-    .q{font-size:18px;font-weight:700;margin:0 0 12px;}
-    .answers{display:flex;flex-direction:column;gap:10px;}
-    button{appearance:none;border:1px solid rgba(255,255,255,0.14);background:rgba(0,0,0,0.15);color:inherit;border-radius:12px;padding:12px 12px;text-align:left;cursor:pointer;}
-    button:hover{border-color:rgba(255,255,255,0.28);}
-    .hint{display:block;color:#a9adbd;font-size:12px;margin-top:4px;}
-    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-    .pill{border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:6px 10px;font-size:12px;color:#a9adbd;background:rgba(255,255,255,0.02);}
-    .outcome{margin-top:16px;border-top:1px solid rgba(255,255,255,0.10);padding-top:16px;}
-    .out-title{font-size:18px;font-weight:800;margin:0 0 8px;}
-    .copy{white-space:pre-wrap;font-size:14px;}
-    .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-    .tools button{padding:8px 10px;font-size:12px;border-radius:999px;}
-    .small{font-size:12px;color:#a9adbd;margin-top:10px;}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.5;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#e2e8f0;min-height:100vh;}
+    .wrap{max-width:720px;margin:0 auto;padding:40px 20px 60px;}
+    header{text-align:center;margin-bottom:32px;}
+    h1{font-size:32px;margin:0 0 12px;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .sub{color:#94a3b8;font-size:15px;max-width:52ch;margin:0 auto;}
+    .card{border:1px solid rgba(148,163,184,0.2);border-radius:16px;background:rgba(15,23,42,0.6);backdrop-filter:blur(12px);padding:28px;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+    .start-screen{text-align:center;}
+    .start-screen h2{font-size:24px;margin:0 0 16px;font-weight:700;color:#f1f5f9;}
+    .start-screen p{color:#cbd5e1;font-size:16px;line-height:1.6;margin-bottom:28px;}
+    .start-btn{appearance:none;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-radius:12px;padding:14px 32px;font-size:16px;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
+    .start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(59,130,246,0.3);}
+    .q{font-size:20px;font-weight:700;margin:0 0 20px;color:#f1f5f9;}
+    .answers{display:flex;flex-direction:column;gap:12px;}
+    button{appearance:none;border:1px solid rgba(148,163,184,0.25);background:rgba(30,41,59,0.5);color:#e2e8f0;border-radius:12px;padding:14px 16px;text-align:left;cursor:pointer;transition:all 0.2s;font-size:15px;font-weight:500;}
+    button:hover{border-color:rgba(96,165,250,0.5);background:rgba(30,41,59,0.8);transform:translateX(4px);}
+    .hint{display:block;color:#94a3b8;font-size:13px;margin-top:4px;font-weight:400;}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
+    .pill{border:1px solid rgba(148,163,184,0.2);border-radius:999px;padding:6px 12px;font-size:12px;color:#94a3b8;background:rgba(30,41,59,0.4);}
+    .outcome{margin-top:24px;border-top:1px solid rgba(148,163,184,0.15);padding-top:24px;}
+    .out-title{font-size:22px;font-weight:800;margin:0 0 12px;color:#f1f5f9;}
+    .copy{white-space:pre-wrap;font-size:15px;line-height:1.7;color:#cbd5e1;}
+    .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+    .tools button{padding:10px 16px;font-size:13px;border-radius:999px;transform:none;}
+    .tools button:hover{transform:translateX(0) scale(1.05);}
+    .small{font-size:12px;color:#64748b;margin-top:12px;font-style:italic;}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div>
-        <h1>Narrative Patsy</h1>
-        <div class="sub">Click through a flowchart. You can edit outcome copy in code (see <code>OUTCOME_COPY</code>).</div>
-      </div>
-      <div class="pill">single file</div>
+      <h1>Big Greenland Energy™</h1>
+      <div class="sub">Discover your unique Greenland solution archetype</div>
     </header>
 
-    <div class="card" id="startScreen" style="display:none;">
-      <div class="q" style="margin-bottom:10px;">Do you have Big Greenland Energy™ and the one solution to how to deal with Donald Trump's imperial ambitions?</div>
-      <div class="copy" style="margin-bottom:12px;">So does everyone! But not as unique as yours, of course.</div>
-      <div class="copy" style="margin-bottom:14px;">Finish the flowchart and find out which flavour of armchair diplomat you are!</div>
-      <div class="tools">
-        <button id="start">Start</button>
+    <div class="card">
+      <div id="startScreen" class="start-screen">
+        <h2>Do you have Big Greenland Energy™?</h2>
+        <p>Do you have the one solution to how to deal with Donald Trump's imperial ambitions? So does everyone! But not as unique as yours, of course.</p>
+        <p>Finish the flowchart and find out which flavour of armchair diplomat you are!</p>
+        <button class="start-btn" onclick="startQuiz()">Begin Your Journey</button>
+      </div>
+
+      <div id="quizScreen" style="display:none;">
+        <div id="question" class="q"></div>
+        <div id="answers" class="answers"></div>
+
+        <div class="row" id="path"></div>
+
+        <div class="outcome" id="outcomeBox" style="display:none;">
+          <div class="pill" id="outcomeKey"></div>
+          <h2 class="out-title" id="outcomeTitle"></h2>
+          <div class="copy" id="outcomeCopy"></div>
+
+          <div class="small" style="margin-top:20px;">System note: This solution requires explanation. Explanation requires repetition. Repetition requires Trump.</div>
+          <div class="pill" style="margin-top:12px;display:inline-block;">Final status: Narrative Patsy</div>
+        </div>
+
+        <div class="tools">
+          <button id="restart">Restart</button>
+          <button id="back">Back</button>
+        </div>
       </div>
     </div>
-
-    <div class="card" id="gameCard">
-      <div id="question" class="q"></div>
-      <div id="answers" class="answers"></div>
-
-      <div class="row" id="path"></div>
-
-      <div class="outcome" id="outcomeBox" style="display:none;">
-        <div class="pill" id="outcomeKey"></div>
-        <h2 class="out-title" id="outcomeTitle"></h2>
-        <div class="copy" id="outcomeCopy"></div>
-
-        <div class="small" style="margin-top:14px;">System note: This solution requires explanation. Explanation requires repetition. Repetition requires Trump.</div>
-        <div class="pill" style="margin-top:10px;display:inline-block;">Final status: Narrative Patsy</div>
-      </div>
-
-      <div class="tools">
-        <button id="restart">Restart</button>
-        <button id="back">Back</button>
-      </div>
-    </div>
-
-    <div class="small">Editing: change the strings in <code>OUTCOME_COPY</code>. Change the flow in <code>NODES</code>.</div>
   </div>
 
   <script>
@@ -76,7 +77,7 @@
     const OUTCOME_COPY = {
       "Sanctions Maximalism": {
         title: "Sanctions Maximalism",
-        copy: `Maximum pressure.
+        copy: `Economic pain is a universal language. Apply liberally.
 
 Make the costs visible.
 Make the target explicit.
@@ -84,163 +85,186 @@ Say the name.`
       },
       "Targeted Sanctions Realism": {
         title: "Targeted Sanctions Realism",
-        copy: `Targeted lists. Narrow pain.
+        copy: `Sanctions, but with a PowerPoint showing we thought about it.
 
+Targeted lists. Narrow pain.
 Explain who and why.
 Say the name.`
       },
       "Trade Retaliation": {
         title: "Trade Retaliation",
-        copy: `Tariffs, counter-tariffs, leverage.
+        copy: `He does tariffs? We do tariffs. Equilibrium through mutual suffering.
 
+Tariffs, counter-tariffs, leverage.
 Explain it on TV.
 Say the name.`
       },
       "Anti-Coercion Instrument": {
-        title: "Anti-Coercion Instrument",
-        copy: `Use the EU tool.
+        title: "Anti-Coercion Instrument Enthusiast",
+        copy: `We passed a regulation for this in 2023! (checks notes) Now what?
 
+Use the EU tool.
 Announce it.
 Brief it.
 Say the name.`
       },
       "NATO Expansion Logic": {
         title: "NATO Expansion Logic",
-        copy: `Make it security.
+        copy: `Greenland joins NATO. Problem becomes someone else's problem.
 
+Make it security.
 Press conference required.
 Say the name.`
       },
       "Joint Defence Proposal": {
         title: "Joint Defence Proposal",
-        copy: `Shared posture, shared patrols.
+        copy: `Nordic flags on boats. Coordinated press releases. Deterrence achieved.
 
+Shared posture, shared patrols.
 Explained as deterrence.
 Say the name.`
       },
       "Military Deterrence (Implicit)": {
         title: "Military Deterrence (Implicit)",
-        copy: `Signals without saying “war”.
+        copy: `Send a frigate. Don't explain why. Let implications linger.
 
+Signals without saying "war".
 Everyone hears it anyway.
 Say the name.`
       },
       "International Law Invocation": {
         title: "International Law Invocation",
-        copy: `Treaties. Norms. Jurisdiction.
+        copy: `The 1933 Montevideo Convention has entered the chat.
 
+Treaties. Norms. Jurisdiction.
 Explained in interviews.
 Say the name.`
       },
       "Multilateralisation": {
         title: "Multilateralisation",
-        copy: `Move it into a room with flags.
+        copy: `Can't solve it alone? Add 47 stakeholders and a steering committee.
 
+Move it into a room with flags.
 The microphones follow.
 Say the name.`
       },
       "Procedural Delay": {
         title: "Procedural Delay",
-        copy: `Assess. Consult. Review.
+        copy: `Schedule a working group to assess the feasibility of a review process.
 
+Assess. Consult. Review.
 Explain the timeline.
 Say the name.`
       },
       "New Framework Creation": {
         title: "New Framework Creation",
-        copy: `Create a mechanism.
+        copy: `Launch the EU-Arctic-Atlantic Strategic Dialogue Mechanism. With a logo.
 
+Create a mechanism.
 Launch it publicly.
 Say the name.`
       },
       "Quiet Diplomacy": {
         title: "Quiet Diplomacy",
-        copy: `Talk off-camera.
+        copy: `Back channels. Closed doors. Zero tweets. Pure vibes.
 
-Then explain why you can’t say more.
+Talk off-camera.
+Then explain why you can't say more.
 Say the name.`
       },
       "Strategic Ambiguity": {
         title: "Strategic Ambiguity",
-        copy: `Say less. Mean more.
+        copy: `"All options remain on the table." (There are no options.)
 
+Say less. Mean more.
 Then do a Q&A.
 Say the name.`
       },
       "Transactional Bargaining": {
         title: "Transactional Bargaining",
-        copy: `Trade something for something.
+        copy: `He wants Greenland? Offer him a trade deal and change the subject.
 
+Trade something for something.
 Explain the trade.
 Say the name.`
       },
       "Grand Bargain": {
         title: "Grand Bargain",
-        copy: `Bundle it all.
+        copy: `Package this with Ukraine, climate, and tariffs. Solve everything or nothing.
 
+Bundle it all.
 Sell the package.
 Say the name.`
       },
       "De-escalation First": {
-        title: "De-escalation First",
-        copy: `Lower the temperature.
+        title: "De-escalation Doctrine",
+        copy: `Lower the temperature by... being calm? And reasonable? Surely that works.
 
+Lower the temperature.
 Explain the tone.
 Say the name.`
       },
       "Democratic Deliberation": {
         title: "Democratic Deliberation",
-        copy: `Debate it properly.
+        copy: `Convene a citizens' assembly. Report back in 18 months.
 
+Debate it properly.
 Stream it. Clip it.
 Say the name.`
       },
       "Greenland Self-Determination": {
         title: "Greenland Self-Determination",
-        copy: `Put Greenland in the centre.
+        copy: `Revolutionary idea: ask the Greenlanders. (After we discuss it first.)
 
+Put Greenland in the centre.
 Explain that choice.
 Say the name.`
       },
       "Values-Based Response": {
         title: "Values-Based Response",
-        copy: `Act like Europe.
+        copy: `Act with dignity, principle, and the moral high ground. Feel good regardless of outcome.
 
+Act like Europe.
 Define the values.
 Say the name.`
       },
       "Norm-Setting": {
         title: "Norm-Setting",
-        copy: `Set precedent.
+        copy: `Respond so correctly that future autocrats take notes and reconsider.
 
+Set precedent.
 Explain the lesson.
 Say the name.`
       },
       "Ignore It": {
         title: "Ignore It",
-        copy: `Don’t feed it.
+        copy: `Do not feed the troll. Literally the only thing we haven't tried.
 
-But you still have to explain why you didn’t respond.
+Don't feed it.
+But you still have to explain why you didn't respond.
 Say the name.`
       },
       "Wait It Out": {
         title: "Wait It Out",
-        copy: `Do nothing, strategically.
+        copy: `Four years is nothing in geological time. Or trade policy.
 
+Do nothing, strategically.
 Explain the waiting.
 Say the name.`
       },
       "Reframe the Issue": {
         title: "Reframe the Issue",
-        copy: `This isn’t about Greenland.
+        copy: `This is actually about climate/China/Arctic shipping. Greenland is a metaphor.
 
-Explain what it’s “really” about.
+This isn't about Greenland.
+Explain what it's "really" about.
 Say the name.`
       },
       "Out-Message It": {
         title: "Out-Message It",
-        copy: `Better comms. Better framing.
+        copy: `We're losing the narrative. Deploy better infographics.
 
+Better comms. Better framing.
 More content. More mentions.
 Say the name.`
       }
@@ -399,14 +423,9 @@ Say the name.`
     // ------------------------------------------------------------
     // App state
     // ------------------------------------------------------------
-    let started = false;
     let nodeId = "Q1";
     let history = []; // stack of { nodeId, pickedLabel }
     let outcome = null;
-
-    const $startScreen = document.getElementById("startScreen");
-    const $gameCard = document.getElementById("gameCard");
-    const $startBtn = document.getElementById("start");
 
     const $question = document.getElementById("question");
     const $answers = document.getElementById("answers");
@@ -415,17 +434,16 @@ Say the name.`
     const $outcomeKey = document.getElementById("outcomeKey");
     const $outcomeTitle = document.getElementById("outcomeTitle");
     const $outcomeCopy = document.getElementById("outcomeCopy");
+    const $startScreen = document.getElementById("startScreen");
+    const $quizScreen = document.getElementById("quizScreen");
+
+    function startQuiz(){
+      $startScreen.style.display = "none";
+      $quizScreen.style.display = "block";
+      render();
+    }
 
     function render(){
-      // Start screen
-      if(!started){
-        $startScreen.style.display = "block";
-        $gameCard.style.display = "none";
-        return;
-      }
-      $startScreen.style.display = "none";
-      $gameCard.style.display = "block";
-
       // Path pills
       $path.innerHTML = "";
       history.forEach(h => {
@@ -452,7 +470,7 @@ Say the name.`
 
       node.answers.forEach(ans => {
         const b = document.createElement("button");
-        b.innerHTML = `${ans.label}${ans.hint ? `<span class=\"hint\">${ans.hint}</span>` : ""}`;
+        b.innerHTML = `${ans.label}${ans.hint ? `<span class="hint">${ans.hint}</span>` : ""}`;
         b.addEventListener("click", () => pick(ans));
         $answers.appendChild(b);
       });
@@ -468,20 +486,12 @@ Say the name.`
       render();
     }
 
-    function startGame(){
-      started = true;
-      nodeId = "Q1";
-      history = [];
-      outcome = null;
-      render();
-    }
-
     function restart(){
-      started = true;
       nodeId = "Q1";
       history = [];
       outcome = null;
-      render();
+      $startScreen.style.display = "block";
+      $quizScreen.style.display = "none";
     }
 
     function back(){
@@ -497,12 +507,8 @@ Say the name.`
       render();
     }
 
-    $startBtn.addEventListener("click", startGame);
-
     document.getElementById("restart").addEventListener("click", restart);
     document.getElementById("back").addEventListener("click", back);
-
-    render();
   </script>
 </body>
 </html>
