@@ -36,7 +36,16 @@
       <div class="pill">single file</div>
     </header>
 
-    <div class="card">
+    <div class="card" id="startScreen" style="display:none;">
+      <div class="q" style="margin-bottom:10px;">Do you have Big Greenland Energy™ and the one solution to how to deal with Donald Trump's imperial ambitions?</div>
+      <div class="copy" style="margin-bottom:12px;">So does everyone! But not as unique as yours, of course.</div>
+      <div class="copy" style="margin-bottom:14px;">Finish the flowchart and find out which flavour of armchair diplomat you are!</div>
+      <div class="tools">
+        <button id="start">Start</button>
+      </div>
+    </div>
+
+    <div class="card" id="gameCard">
       <div id="question" class="q"></div>
       <div id="answers" class="answers"></div>
 
@@ -390,9 +399,14 @@ Say the name.`
     // ------------------------------------------------------------
     // App state
     // ------------------------------------------------------------
+    let started = false;
     let nodeId = "Q1";
     let history = []; // stack of { nodeId, pickedLabel }
     let outcome = null;
+
+    const $startScreen = document.getElementById("startScreen");
+    const $gameCard = document.getElementById("gameCard");
+    const $startBtn = document.getElementById("start");
 
     const $question = document.getElementById("question");
     const $answers = document.getElementById("answers");
@@ -403,6 +417,15 @@ Say the name.`
     const $outcomeCopy = document.getElementById("outcomeCopy");
 
     function render(){
+      // Start screen
+      if(!started){
+        $startScreen.style.display = "block";
+        $gameCard.style.display = "none";
+        return;
+      }
+      $startScreen.style.display = "none";
+      $gameCard.style.display = "block";
+
       // Path pills
       $path.innerHTML = "";
       history.forEach(h => {
@@ -445,7 +468,16 @@ Say the name.`
       render();
     }
 
+    function startGame(){
+      started = true;
+      nodeId = "Q1";
+      history = [];
+      outcome = null;
+      render();
+    }
+
     function restart(){
+      started = true;
       nodeId = "Q1";
       history = [];
       outcome = null;
@@ -464,6 +496,8 @@ Say the name.`
       nodeId = prev.nodeId;
       render();
     }
+
+    $startBtn.addEventListener("click", startGame);
 
     document.getElementById("restart").addEventListener("click", restart);
     document.getElementById("back").addEventListener("click", back);
