@@ -120,6 +120,23 @@
     .outcome-screen {
       text-align: center;
     }
+    .spirit-animal {
+      font-size: 64px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .spirit-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #8b5cf6;
+      margin-bottom: 8px;
+    }
+    .spirit-desc {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
     .outcome-badge {
       display: inline-block;
       background: #f3f4f6;
@@ -135,17 +152,54 @@
     .outcome-title {
       font-size: 28px;
       font-weight: 700;
-      margin: 0 0 20px;
+      margin: 0 0 16px;
       color: #1a1a1a;
       line-height: 1.2;
     }
     .outcome-copy {
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.7;
       color: #666;
-      white-space: pre-wrap;
       margin-bottom: 32px;
-      text-align: left;
+    }
+    .share-section {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    .share-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .share-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-share {
+      appearance: none;
+      border: none;
+      background: #0a66c2;
+      color: white;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-share:hover {
+      background: #004182;
+      transform: translateY(-1px);
     }
     .outcome-note {
       background: #fef3c7;
@@ -245,16 +299,28 @@
       </div>
 
       <div id="outcomeScreen" class="outcome-screen" style="display:none;">
-        <div class="outcome-badge">Your Result</div>
+        <div class="outcome-badge">Your EU Strategy Archetype</div>
+        <div class="spirit-animal" id="spiritEmoji"></div>
+        <div class="spirit-name" id="spiritName"></div>
+        <div class="spirit-desc" id="spiritDesc"></div>
+        
         <h2 class="outcome-title" id="outcomeTitle"></h2>
         <div class="outcome-copy" id="outcomeCopy"></div>
-        <div class="outcome-note">
-          System note: This solution requires explanation. Explanation requires repetition. Repetition requires Trump.
+
+        <div class="share-section">
+          <div class="share-title">Share Your Result</div>
+          <div class="share-buttons">
+            <button class="btn-share" onclick="shareLinkedIn()">
+              <span>Share on LinkedIn</span>
+            </button>
+            <button class="btn-secondary" onclick="copyResult()">
+              📋 Copy Text
+            </button>
+          </div>
         </div>
-        <div class="final-badge">Final status: Narrative Patsy</div>
         
-        <div class="nav-buttons">
-          <button class="btn-secondary" onclick="restart()">Start Over</button>
+        <div class="nav-buttons" style="margin-top: 24px;">
+          <button class="btn-secondary" onclick="restart()">Take Quiz Again</button>
         </div>
       </div>
     </div>
@@ -266,196 +332,147 @@
     const OUTCOME_COPY = {
       "Sanctions Maximalism": {
         title: "Sanctions Maximalism",
-        copy: `Economic pain is a universal language. Apply liberally.
-
-Make the costs visible.
-Make the target explicit.
-Say the name.`
+        copy: `Economic pain is a universal language. Apply liberally.`,
+        spirit: "🦅 The Enforcer",
+        spiritDesc: "Direct, uncompromising, believes in the power of consequences"
       },
       "Targeted Sanctions Realism": {
         title: "Targeted Sanctions Realism",
-        copy: `Sanctions, but with a PowerPoint showing we thought about it.
-
-Targeted lists. Narrow pain.
-Explain who and why.
-Say the name.`
+        copy: `Sanctions, but with a PowerPoint showing we thought about it.`,
+        spirit: "🎯 The Precision Striker",
+        spiritDesc: "Surgical, data-driven, loves a well-crafted sanctions list"
       },
       "Trade Retaliation": {
         title: "Trade Retaliation",
-        copy: `He does tariffs? We do tariffs. Equilibrium through mutual suffering.
-
-Tariffs, counter-tariffs, leverage.
-Explain it on TV.
-Say the name.`
+        copy: `He does tariffs? We do tariffs. Equilibrium through mutual suffering.`,
+        spirit: "⚖️ The Mirror",
+        spiritDesc: "Eye for an eye, tariff for tariff, believes in symmetrical responses"
       },
       "Anti-Coercion Instrument": {
         title: "Anti-Coercion Instrument Enthusiast",
-        copy: `We passed a regulation for this in 2023! (checks notes) Now what?
-
-Use the EU tool.
-Announce it.
-Brief it.
-Say the name.`
+        copy: `We passed a regulation for this in 2023! (checks notes) Now what?`,
+        spirit: "📋 The Bureaucrat",
+        spiritDesc: "Regulation-ready, procedure-loving, believes every problem has a legal instrument"
       },
       "NATO Expansion Logic": {
         title: "NATO Expansion Logic",
-        copy: `Greenland joins NATO. Problem becomes someone else's problem.
-
-Make it security.
-Press conference required.
-Say the name.`
+        copy: `Greenland joins NATO. Problem becomes someone else's problem.`,
+        spirit: "🛡️ The Alliance Builder",
+        spiritDesc: "Collective security maximalist, Article 5 is the answer to everything"
       },
       "Joint Defence Proposal": {
         title: "Joint Defence Proposal",
-        copy: `Nordic flags on boats. Coordinated press releases. Deterrence achieved.
-
-Shared posture, shared patrols.
-Explained as deterrence.
-Say the name.`
+        copy: `Nordic flags on boats. Coordinated press releases. Deterrence achieved.`,
+        spirit: "🤝 The Coalition Crafter",
+        spiritDesc: "Multilateralist at heart, believes strength comes in coordinated numbers"
       },
       "Military Deterrence (Implicit)": {
         title: "Military Deterrence (Implicit)",
-        copy: `Send a frigate. Don't explain why. Let implications linger.
-
-Signals without saying "war".
-Everyone hears it anyway.
-Say the name.`
+        copy: `Send a frigate. Don't explain why. Let implications linger.`,
+        spirit: "🌊 The Silent Guardian",
+        spiritDesc: "Actions over words, presence is the message, vibes-based deterrence"
       },
       "International Law Invocation": {
         title: "International Law Invocation",
-        copy: `The 1933 Montevideo Convention has entered the chat.
-
-Treaties. Norms. Jurisdiction.
-Explained in interviews.
-Say the name.`
+        copy: `The 1933 Montevideo Convention has entered the chat.`,
+        spirit: "⚖️ The Treaty Scholar",
+        spiritDesc: "Rules-based order defender, cites conventions in casual conversation"
       },
       "Multilateralisation": {
         title: "Multilateralisation",
-        copy: `Can't solve it alone? Add 47 stakeholders and a steering committee.
-
-Move it into a room with flags.
-The microphones follow.
-Say the name.`
+        copy: `Can't solve it alone? Add 47 stakeholders and a steering committee.`,
+        spirit: "🌐 The Forum Convener",
+        spiritDesc: "More flags, more legitimacy, loves a good multilateral process"
       },
       "Procedural Delay": {
         title: "Procedural Delay",
-        copy: `Schedule a working group to assess the feasibility of a review process.
-
-Assess. Consult. Review.
-Explain the timeline.
-Say the name.`
+        copy: `Schedule a working group to assess the feasibility of a review process.`,
+        spirit: "⏳ The Patient Assessor",
+        spiritDesc: "Due process takes time, every decision needs three committees"
       },
       "New Framework Creation": {
         title: "New Framework Creation",
-        copy: `Launch the EU-Arctic-Atlantic Strategic Dialogue Mechanism. With a logo.
-
-Create a mechanism.
-Launch it publicly.
-Say the name.`
+        copy: `Launch the EU-Arctic-Atlantic Strategic Dialogue Mechanism. With a logo.`,
+        spirit: "🏗️ The Institution Builder",
+        spiritDesc: "Every crisis deserves its own mechanism, preferably with acronyms"
       },
       "Quiet Diplomacy": {
         title: "Quiet Diplomacy",
-        copy: `Back channels. Closed doors. Zero tweets. Pure vibes.
-
-Talk off-camera.
-Then explain why you can't say more.
-Say the name.`
+        copy: `Back channels. Closed doors. Zero tweets. Pure vibes.`,
+        spirit: "🤫 The Whisperer",
+        spiritDesc: "Off-the-record specialist, believes real power moves in silence"
       },
       "Strategic Ambiguity": {
         title: "Strategic Ambiguity",
-        copy: `"All options remain on the table." (There are no options.)
-
-Say less. Mean more.
-Then do a Q&A.
-Say the name.`
+        copy: `"All options remain on the table." (There are no options.)`,
+        spirit: "🎭 The Sphinx",
+        spiritDesc: "Says much, reveals little, masters the art of meaningful vagueness"
       },
       "Transactional Bargaining": {
         title: "Transactional Bargaining",
-        copy: `He wants Greenland? Offer him a trade deal and change the subject.
-
-Trade something for something.
-Explain the trade.
-Say the name.`
+        copy: `He wants Greenland? Offer him a trade deal and change the subject.`,
+        spirit: "🔄 The Deal Maker",
+        spiritDesc: "Everything is tradeable, every problem is a negotiation opportunity"
       },
       "Grand Bargain": {
         title: "Grand Bargain",
-        copy: `Package this with Ukraine, climate, and tariffs. Solve everything or nothing.
-
-Bundle it all.
-Sell the package.
-Say the name.`
+        copy: `Package this with Ukraine, climate, and tariffs. Solve everything or nothing.`,
+        spirit: "📦 The Package Architect",
+        spiritDesc: "Thinks big, bundles everything, comprehensive solutions only"
       },
       "De-escalation First": {
         title: "De-escalation Doctrine",
-        copy: `Lower the temperature by... being calm? And reasonable? Surely that works.
-
-Lower the temperature.
-Explain the tone.
-Say the name.`
+        copy: `Lower the temperature by... being calm? And reasonable? Surely that works.`,
+        spirit: "🕊️ The Peacemaker",
+        spiritDesc: "Tone matters, dialogue first, calm is a strategy"
       },
       "Democratic Deliberation": {
         title: "Democratic Deliberation",
-        copy: `Convene a citizens' assembly. Report back in 18 months.
-
-Debate it properly.
-Stream it. Clip it.
-Say the name.`
+        copy: `Convene a citizens' assembly. Report back in 18 months.`,
+        spirit: "🗳️ The Deliberator",
+        spiritDesc: "Legitimacy through process, democracy takes time and that's okay"
       },
       "Greenland Self-Determination": {
         title: "Greenland Self-Determination",
-        copy: `Revolutionary idea: ask the Greenlanders. (After we discuss it first.)
-
-Put Greenland in the centre.
-Explain that choice.
-Say the name.`
+        copy: `Revolutionary idea: ask the Greenlanders. (After we discuss it first.)`,
+        spirit: "🗣️ The Voice Amplifier",
+        spiritDesc: "Self-determination champion, believes affected people should decide"
       },
       "Values-Based Response": {
         title: "Values-Based Response",
-        copy: `Act with dignity, principle, and the moral high ground. Feel good regardless of outcome.
-
-Act like Europe.
-Define the values.
-Say the name.`
+        copy: `Act with dignity, principle, and the moral high ground. Feel good regardless of outcome.`,
+        spirit: "💎 The Principled One",
+        spiritDesc: "Values over victories, the how matters as much as the what"
       },
       "Norm-Setting": {
         title: "Norm-Setting",
-        copy: `Respond so correctly that future autocrats take notes and reconsider.
-
-Set precedent.
-Explain the lesson.
-Say the name.`
+        copy: `Respond so correctly that future autocrats take notes and reconsider.`,
+        spirit: "📚 The Example Setter",
+        spiritDesc: "Playing the long game, today's response is tomorrow's precedent"
       },
       "Ignore It": {
         title: "Ignore It",
-        copy: `Do not feed the troll. Literally the only thing we haven't tried.
-
-Don't feed it.
-But you still have to explain why you didn't respond.
-Say the name.`
+        copy: `Do not feed the troll. Literally the only thing we haven't tried.`,
+        spirit: "🙈 The Disengager",
+        spiritDesc: "Strategic silence, attention is oxygen, denial as policy"
       },
       "Wait It Out": {
         title: "Wait It Out",
-        copy: `Four years is nothing in geological time. Or trade policy.
-
-Do nothing, strategically.
-Explain the waiting.
-Say the name.`
+        copy: `Four years is nothing in geological time. Or trade policy.`,
+        spirit: "⏰ The Patient One",
+        spiritDesc: "Time heals all wounds, outlasting is a valid strategy"
       },
       "Reframe the Issue": {
         title: "Reframe the Issue",
-        copy: `This is actually about climate/China/Arctic shipping. Greenland is a metaphor.
-
-This isn't about Greenland.
-Explain what it's "really" about.
-Say the name.`
+        copy: `This is actually about climate/China/Arctic shipping. Greenland is a metaphor.`,
+        spirit: "🔍 The Reframer",
+        spiritDesc: "Sees the bigger picture, everything is connected to everything"
       },
       "Out-Message It": {
         title: "Out-Message It",
-        copy: `We're losing the narrative. Deploy better infographics.
-
-Better comms. Better framing.
-More content. More mentions.
-Say the name.`
+        copy: `We're losing the narrative. Deploy better infographics.`,
+        spirit: "📣 The Communicator",
+        spiritDesc: "Narrative is reality, better messaging beats better policy"
       }
     };
 
@@ -617,6 +634,9 @@ Say the name.`
     const $answers = document.getElementById("answers");
     const $outcomeTitle = document.getElementById("outcomeTitle");
     const $outcomeCopy = document.getElementById("outcomeCopy");
+    const $spiritEmoji = document.getElementById("spiritEmoji");
+    const $spiritName = document.getElementById("spiritName");
+    const $spiritDesc = document.getElementById("spiritDesc");
     const $progressBar = document.getElementById("progressBar");
     const $backBtn = document.getElementById("backBtn");
 
@@ -673,8 +693,55 @@ Say the name.`
       $progressBar.style.width = "100%";
 
       const data = OUTCOME_COPY[outcome];
+      const spirit = data.spirit.split(' ');
+      const emoji = spirit[0];
+      const name = spirit.slice(1).join(' ');
+      
+      $spiritEmoji.textContent = emoji;
+      $spiritName.textContent = name;
+      $spiritDesc.textContent = data.spiritDesc;
       $outcomeTitle.textContent = data.title;
       $outcomeCopy.textContent = data.copy;
+    }
+
+    function shareLinkedIn() {
+      const data = OUTCOME_COPY[outcome];
+      const spirit = data.spirit.split(' ');
+      const name = spirit.slice(1).join(' ');
+      
+      const text = `I just discovered my EU Strategy Archetype: ${name}!
+
+${data.title}
+${data.copy}
+
+${data.spiritDesc}
+
+What's your Greenland solution? Take the quiz: [your-url-here]
+
+#BigGreenlandEnergy #EUStrategy #Geopolitics`;
+      
+      const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+      window.open(linkedInUrl, '_blank');
+      
+      // Copy text to clipboard for easy pasting
+      navigator.clipboard.writeText(text);
+      alert('Text copied to clipboard! Paste it into your LinkedIn post.');
+    }
+
+    function copyResult() {
+      const data = OUTCOME_COPY[outcome];
+      const spirit = data.spirit.split(' ');
+      const name = spirit.slice(1).join(' ');
+      
+      const text = `My EU Strategy Archetype: ${name}
+
+${data.title}
+${data.copy}
+
+${data.spiritDesc}`;
+      
+      navigator.clipboard.writeText(text);
+      alert('Result copied to clipboard!');
     }
 
     function goBack() {
