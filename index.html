@@ -5,75 +5,264 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Big Greenland Energy™</title>
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.5;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#e2e8f0;min-height:100vh;}
-    .wrap{max-width:720px;margin:0 auto;padding:40px 20px 60px;}
-    header{text-align:center;margin-bottom:32px;}
-    h1{font-size:32px;margin:0 0 12px;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .sub{color:#94a3b8;font-size:15px;max-width:52ch;margin:0 auto;}
-    .card{border:1px solid rgba(148,163,184,0.2);border-radius:16px;background:rgba(15,23,42,0.6);backdrop-filter:blur(12px);padding:28px;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
-    .start-screen{text-align:center;}
-    .start-screen h2{font-size:24px;margin:0 0 16px;font-weight:700;color:#f1f5f9;}
-    .start-screen p{color:#cbd5e1;font-size:16px;line-height:1.6;margin-bottom:28px;}
-    .start-btn{appearance:none;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-radius:12px;padding:14px 32px;font-size:16px;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
-    .start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(59,130,246,0.3);}
-    .q{font-size:20px;font-weight:700;margin:0 0 20px;color:#f1f5f9;}
-    .answers{display:flex;flex-direction:column;gap:12px;}
-    button{appearance:none;border:1px solid rgba(148,163,184,0.25);background:rgba(30,41,59,0.5);color:#e2e8f0;border-radius:12px;padding:14px 16px;text-align:left;cursor:pointer;transition:all 0.2s;font-size:15px;font-weight:500;}
-    button:hover{border-color:rgba(96,165,250,0.5);background:rgba(30,41,59,0.8);transform:translateX(4px);}
-    .hint{display:block;color:#94a3b8;font-size:13px;margin-top:4px;font-weight:400;}
-    .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
-    .pill{border:1px solid rgba(148,163,184,0.2);border-radius:999px;padding:6px 12px;font-size:12px;color:#94a3b8;background:rgba(30,41,59,0.4);}
-    .outcome{margin-top:24px;border-top:1px solid rgba(148,163,184,0.15);padding-top:24px;}
-    .out-title{font-size:22px;font-weight:800;margin:0 0 12px;color:#f1f5f9;}
-    .copy{white-space:pre-wrap;font-size:15px;line-height:1.7;color:#cbd5e1;}
-    .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
-    .tools button{padding:10px 16px;font-size:13px;border-radius:999px;transform:none;}
-    .tools button:hover{transform:translateX(0) scale(1.05);}
-    .small{font-size:12px;color:#64748b;margin-top:12px;font-style:italic;}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .progress-bar {
+      height: 4px;
+      background: #e5e5e5;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 48px 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .start-screen {
+      text-align: center;
+    }
+    .logo {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      color: #1a1a1a;
+      line-height: 1.2;
+    }
+    .start-screen p {
+      font-size: 18px;
+      color: #666;
+      margin: 0 0 20px;
+      line-height: 1.6;
+    }
+    .start-btn {
+      appearance: none;
+      border: none;
+      background: #1a1a1a;
+      color: white;
+      border-radius: 8px;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 16px;
+    }
+    .start-btn:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+    .question-number {
+      font-size: 14px;
+      font-weight: 600;
+      color: #8b5cf6;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .question {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0 0 32px;
+      line-height: 1.3;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .answer-btn {
+      appearance: none;
+      border: 2px solid #e5e5e5;
+      background: white;
+      color: #1a1a1a;
+      border-radius: 8px;
+      padding: 18px 20px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+    }
+    .answer-btn:hover {
+      border-color: #8b5cf6;
+      background: #faf5ff;
+    }
+    .answer-btn:active {
+      transform: scale(0.98);
+    }
+    .outcome-screen {
+      text-align: center;
+    }
+    .outcome-badge {
+      display: inline-block;
+      background: #f3f4f6;
+      color: #6366f1;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .outcome-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 20px;
+      color: #1a1a1a;
+      line-height: 1.2;
+    }
+    .outcome-copy {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #666;
+      white-space: pre-wrap;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .outcome-note {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #92400e;
+      text-align: left;
+      margin: 24px 0;
+      font-style: italic;
+    }
+    .final-badge {
+      display: inline-block;
+      background: #1a1a1a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      justify-content: center;
+    }
+    .btn-secondary {
+      appearance: none;
+      border: 2px solid #e5e5e5;
+      background: white;
+      color: #666;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: #ccc;
+      color: #1a1a1a;
+    }
+    .btn-back {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      appearance: none;
+      border: 2px solid #e5e5e5;
+      background: white;
+      color: #666;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn-back:hover {
+      border-color: #8b5cf6;
+      color: #1a1a1a;
+    }
+    @media (max-width: 640px) {
+      .container { padding: 40px 20px; }
+      .card { padding: 32px 24px; }
+      h1 { font-size: 28px; }
+      .question { font-size: 20px; }
+      .btn-back { bottom: 20px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Big Greenland Energy™</h1>
-      <div class="sub">Discover your unique Greenland solution archetype</div>
-    </header>
+  <div class="container">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+    </div>
 
     <div class="card">
       <div id="startScreen" class="start-screen">
-        <h2>Do you have Big Greenland Energy™?</h2>
-        <p>Do you have the one solution to how to deal with Donald Trump's imperial ambitions? So does everyone! But not as unique as yours, of course.</p>
+        <div class="logo">🌍</div>
+        <h1>Big Greenland Energy™</h1>
+        <p>Do you have the one solution to how to deal with Donald Trump's imperial ambitions?</p>
+        <p>So does everyone! But not as unique as yours, of course.</p>
         <p>Finish the flowchart and find out which flavour of armchair diplomat you are!</p>
         <button class="start-btn" onclick="startQuiz()">Begin Your Journey</button>
       </div>
 
       <div id="quizScreen" style="display:none;">
-        <div id="question" class="q"></div>
-        <div id="answers" class="answers"></div>
+        <div class="question-number" id="questionNumber"></div>
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+      </div>
 
-        <div class="row" id="path"></div>
-
-        <div class="outcome" id="outcomeBox" style="display:none;">
-          <div class="pill" id="outcomeKey"></div>
-          <h2 class="out-title" id="outcomeTitle"></h2>
-          <div class="copy" id="outcomeCopy"></div>
-
-          <div class="small" style="margin-top:20px;">System note: This solution requires explanation. Explanation requires repetition. Repetition requires Trump.</div>
-          <div class="pill" style="margin-top:12px;display:inline-block;">Final status: Narrative Patsy</div>
+      <div id="outcomeScreen" class="outcome-screen" style="display:none;">
+        <div class="outcome-badge">Your Result</div>
+        <h2 class="outcome-title" id="outcomeTitle"></h2>
+        <div class="outcome-copy" id="outcomeCopy"></div>
+        <div class="outcome-note">
+          System note: This solution requires explanation. Explanation requires repetition. Repetition requires Trump.
         </div>
-
-        <div class="tools">
-          <button id="restart">Restart</button>
-          <button id="back">Back</button>
+        <div class="final-badge">Final status: Narrative Patsy</div>
+        
+        <div class="nav-buttons">
+          <button class="btn-secondary" onclick="restart()">Start Over</button>
         </div>
       </div>
     </div>
   </div>
 
+  <button id="backBtn" class="btn-back" style="display:none;" onclick="goBack()">← Back</button>
+
   <script>
-    // ------------------------------------------------------------
-    // Edit me: outcome screen copy
-    // ------------------------------------------------------------
     const OUTCOME_COPY = {
       "Sanctions Maximalism": {
         title: "Sanctions Maximalism",
@@ -270,245 +459,254 @@ Say the name.`
       }
     };
 
-    // ------------------------------------------------------------
-    // Edit me: flowchart nodes
-    // Each node: { question, answers: [{ label, hint, next } or { label, hint, outcome }] }
-    // ------------------------------------------------------------
     const NODES = {
       Q1: {
         question: "Should Europe respond at all?",
         answers: [
-          { label: "No", hint: "starve it", outcome: "Ignore It" },
-          { label: "Yes", hint: "do something", next: "Q2" }
+          { label: "No", next: null, outcome: "Ignore It" },
+          { label: "Yes", next: "Q2" }
         ]
       },
       Q2: {
         question: "Is time itself the strategy?",
         answers: [
-          { label: "Yes", hint: "wait", outcome: "Wait It Out" },
-          { label: "No", hint: "now", next: "Q3" }
+          { label: "Yes", outcome: "Wait It Out" },
+          { label: "No", next: "Q3" }
         ]
       },
       Q3: {
         question: "Should the response impose costs?",
         answers: [
-          { label: "Yes", hint: "make it hurt", next: "Q4" },
-          { label: "No", hint: "no punishment", next: "Q10" }
+          { label: "Yes", next: "Q4" },
+          { label: "No", next: "Q10" }
         ]
       },
       Q4: {
         question: "What kind of costs?",
         answers: [
-          { label: "Economic", hint: "money, trade", next: "Q5" },
-          { label: "Security", hint: "deterrence", next: "Q7" },
-          { label: "Political", hint: "norms or messaging", next: "Q9" }
+          { label: "Economic", next: "Q5" },
+          { label: "Security", next: "Q7" },
+          { label: "Political", next: "Q9" }
         ]
       },
       Q5: {
         question: "Trade or sanctions?",
         answers: [
-          { label: "Trade", hint: "tariffs", outcome: "Trade Retaliation" },
-          { label: "Sanctions", hint: "lists", next: "Q6" }
+          { label: "Trade", outcome: "Trade Retaliation" },
+          { label: "Sanctions", next: "Q6" }
         ]
       },
       Q6: {
         question: "Broad or targeted?",
         answers: [
-          { label: "Broad", hint: "max pressure", outcome: "Sanctions Maximalism" },
-          { label: "Targeted", hint: "smart sanctions", outcome: "Targeted Sanctions Realism" }
+          { label: "Broad", outcome: "Sanctions Maximalism" },
+          { label: "Targeted", outcome: "Targeted Sanctions Realism" }
         ]
       },
       Q7: {
         question: "Through existing security structures?",
         answers: [
-          { label: "Yes", hint: "use what exists", next: "Q8" },
-          { label: "No", hint: "signal anyway", outcome: "Military Deterrence (Implicit)" }
+          { label: "Yes", next: "Q8" },
+          { label: "No", outcome: "Military Deterrence (Implicit)" }
         ]
       },
       Q8: {
         question: "Specifically NATO?",
         answers: [
-          { label: "Yes", hint: "Article-shaped", outcome: "NATO Expansion Logic" },
-          { label: "No", hint: "coalition", outcome: "Joint Defence Proposal" }
+          { label: "Yes", outcome: "NATO Expansion Logic" },
+          { label: "No", outcome: "Joint Defence Proposal" }
         ]
       },
       Q9: {
         question: "Political cost by norms or by messaging?",
         answers: [
-          { label: "Norms", hint: "set precedent", outcome: "Norm-Setting" },
-          { label: "Messaging", hint: "win attention", outcome: "Out-Message It" }
+          { label: "Norms", outcome: "Norm-Setting" },
+          { label: "Messaging", outcome: "Out-Message It" }
         ]
       },
       Q10: {
         question: "Should institutions take the lead?",
         answers: [
-          { label: "Yes", hint: "process", next: "Q11" },
-          { label: "No", hint: "politics", next: "Q14" }
+          { label: "Yes", next: "Q11" },
+          { label: "No", next: "Q14" }
         ]
       },
       Q11: {
         question: "Existing tools or new ones?",
         answers: [
-          { label: "Existing", hint: "already on the shelf", next: "Q12" },
-          { label: "New", hint: "invent", outcome: "New Framework Creation" }
+          { label: "Existing", next: "Q12" },
+          { label: "New", outcome: "New Framework Creation" }
         ]
       },
       Q12: {
         question: "Economic or legal instrument?",
         answers: [
-          { label: "Economic", hint: "anti-coercion", outcome: "Anti-Coercion Instrument" },
-          { label: "Legal", hint: "rules", next: "Q12b" }
+          { label: "Economic", outcome: "Anti-Coercion Instrument" },
+          { label: "Legal", next: "Q12b" }
         ]
       },
       Q12b: {
         question: "Law or multilateral forum?",
         answers: [
-          { label: "Law", hint: "treaties", outcome: "International Law Invocation" },
-          { label: "Forum", hint: "UN/WTO/etc", outcome: "Multilateralisation" }
+          { label: "Law", outcome: "International Law Invocation" },
+          { label: "Forum", outcome: "Multilateralisation" }
         ]
       },
       Q14: {
         question: "Diplomatic or political?",
         answers: [
-          { label: "Diplomatic", hint: "talk first", next: "Q15" },
-          { label: "Political", hint: "deal logic", next: "Q17" }
+          { label: "Diplomatic", next: "Q15" },
+          { label: "Political", next: "Q17" }
         ]
       },
       Q15: {
         question: "Public or quiet?",
         answers: [
-          { label: "Quiet", hint: "back channels", outcome: "Quiet Diplomacy" },
-          { label: "Public", hint: "say less", outcome: "Strategic Ambiguity" }
+          { label: "Quiet", outcome: "Quiet Diplomacy" },
+          { label: "Public", outcome: "Strategic Ambiguity" }
         ]
       },
       Q17: {
         question: "Is there something to trade?",
         answers: [
-          { label: "Yes", hint: "swap concessions", next: "Q18" },
-          { label: "No", hint: "process", next: "Q20" }
+          { label: "Yes", next: "Q18" },
+          { label: "No", next: "Q20" }
         ]
       },
       Q18: {
         question: "Small deal or big deal?",
         answers: [
-          { label: "Small", hint: "one issue", outcome: "Transactional Bargaining" },
-          { label: "Big", hint: "package", outcome: "Grand Bargain" }
+          { label: "Small", outcome: "Transactional Bargaining" },
+          { label: "Big", outcome: "Grand Bargain" }
         ]
       },
       Q20: {
         question: "Should democratic process be central?",
         answers: [
-          { label: "Yes", hint: "legitimacy", next: "Q21" },
-          { label: "No", hint: "tone/identity/frame", next: "Q23" }
+          { label: "Yes", next: "Q21" },
+          { label: "No", next: "Q23" }
         ]
       },
       Q21: {
         question: "Whose democracy?",
         answers: [
-          { label: "Greenland", hint: "self-determination", outcome: "Greenland Self-Determination" },
-          { label: "Europe", hint: "deliberation", outcome: "Democratic Deliberation" }
+          { label: "Greenland", outcome: "Greenland Self-Determination" },
+          { label: "Europe", outcome: "Democratic Deliberation" }
         ]
       },
       Q23: {
         question: "Which non-cost move?",
         answers: [
-          { label: "Values", hint: "who we are", outcome: "Values-Based Response" },
-          { label: "De-escalate", hint: "cool it", outcome: "De-escalation First" },
-          { label: "Reframe", hint: "change the frame", outcome: "Reframe the Issue" },
-          { label: "Delay", hint: "slow it down", outcome: "Procedural Delay" }
+          { label: "Values", outcome: "Values-Based Response" },
+          { label: "De-escalate", outcome: "De-escalation First" },
+          { label: "Reframe", outcome: "Reframe the Issue" },
+          { label: "Delay", outcome: "Procedural Delay" }
         ]
       }
     };
 
-    // ------------------------------------------------------------
-    // App state
-    // ------------------------------------------------------------
-    let nodeId = "Q1";
-    let history = []; // stack of { nodeId, pickedLabel }
+    let currentNode = "Q1";
+    let history = [];
     let outcome = null;
 
-    const $question = document.getElementById("question");
-    const $answers = document.getElementById("answers");
-    const $path = document.getElementById("path");
-    const $outcomeBox = document.getElementById("outcomeBox");
-    const $outcomeKey = document.getElementById("outcomeKey");
-    const $outcomeTitle = document.getElementById("outcomeTitle");
-    const $outcomeCopy = document.getElementById("outcomeCopy");
     const $startScreen = document.getElementById("startScreen");
     const $quizScreen = document.getElementById("quizScreen");
+    const $outcomeScreen = document.getElementById("outcomeScreen");
+    const $question = document.getElementById("question");
+    const $questionNumber = document.getElementById("questionNumber");
+    const $answers = document.getElementById("answers");
+    const $outcomeTitle = document.getElementById("outcomeTitle");
+    const $outcomeCopy = document.getElementById("outcomeCopy");
+    const $progressBar = document.getElementById("progressBar");
+    const $backBtn = document.getElementById("backBtn");
 
-    function startQuiz(){
+    function startQuiz() {
       $startScreen.style.display = "none";
       $quizScreen.style.display = "block";
+      $backBtn.style.display = "block";
       render();
     }
 
-    function render(){
-      // Path pills
-      $path.innerHTML = "";
-      history.forEach(h => {
-        const p = document.createElement("div");
-        p.className = "pill";
-        p.textContent = h.pickedLabel;
-        $path.appendChild(p);
-      });
-
-      if(outcome){
-        $question.textContent = "Complete.";
-        $answers.innerHTML = "";
-        $outcomeBox.style.display = "block";
-        $outcomeKey.textContent = outcome;
-        $outcomeTitle.textContent = (OUTCOME_COPY[outcome]?.title) || outcome;
-        $outcomeCopy.textContent = (OUTCOME_COPY[outcome]?.copy) || "";
+    function render() {
+      if (outcome) {
+        showOutcome();
         return;
       }
 
-      const node = NODES[nodeId];
+      const node = NODES[currentNode];
+      $questionNumber.textContent = `Question ${history.length + 1}`;
       $question.textContent = node.question;
-      $answers.innerHTML = "";
-      $outcomeBox.style.display = "none";
+      
+      // Update progress
+      const totalQuestions = 10; // approximate max
+      const progress = Math.min((history.length / totalQuestions) * 100, 90);
+      $progressBar.style.width = progress + '%';
 
+      $answers.innerHTML = "";
       node.answers.forEach(ans => {
-        const b = document.createElement("button");
-        b.innerHTML = `${ans.label}${ans.hint ? `<span class="hint">${ans.hint}</span>` : ""}`;
-        b.addEventListener("click", () => pick(ans));
-        $answers.appendChild(b);
+        const btn = document.createElement("button");
+        btn.className = "answer-btn";
+        btn.textContent = ans.label;
+        btn.onclick = () => selectAnswer(ans);
+        $answers.appendChild(btn);
       });
+
+      $backBtn.style.display = history.length > 0 ? "block" : "none";
     }
 
-    function pick(ans){
-      history.push({ nodeId, pickedLabel: ans.label });
-      if(ans.outcome){
+    function selectAnswer(ans) {
+      history.push({ node: currentNode, answer: ans.label });
+      
+      if (ans.outcome) {
         outcome = ans.outcome;
+        render();
       } else {
-        nodeId = ans.next;
+        currentNode = ans.next;
+        render();
       }
+    }
+
+    function showOutcome() {
+      $quizScreen.style.display = "none";
+      $outcomeScreen.style.display = "block";
+      $backBtn.style.display = "none";
+      $progressBar.style.width = "100%";
+
+      const data = OUTCOME_COPY[outcome];
+      $outcomeTitle.textContent = data.title;
+      $outcomeCopy.textContent = data.copy;
+    }
+
+    function goBack() {
+      if (outcome) {
+        outcome = null;
+        $outcomeScreen.style.display = "none";
+        $quizScreen.style.display = "block";
+        $backBtn.style.display = "block";
+        render();
+        return;
+      }
+
+      if (history.length === 0) {
+        restart();
+        return;
+      }
+
+      const prev = history.pop();
+      currentNode = prev.node;
       render();
     }
 
-    function restart(){
-      nodeId = "Q1";
+    function restart() {
+      currentNode = "Q1";
       history = [];
       outcome = null;
       $startScreen.style.display = "block";
       $quizScreen.style.display = "none";
+      $outcomeScreen.style.display = "none";
+      $backBtn.style.display = "none";
+      $progressBar.style.width = "0%";
     }
-
-    function back(){
-      if(outcome){
-        outcome = null;
-      }
-      const prev = history.pop();
-      if(!prev){
-        restart();
-        return;
-      }
-      nodeId = prev.nodeId;
-      render();
-    }
-
-    document.getElementById("restart").addEventListener("click", restart);
-    document.getElementById("back").addEventListener("click", back);
   </script>
 </body>
 </html>
