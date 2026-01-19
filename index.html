@@ -204,6 +204,84 @@
       background: #004182;
       transform: translateY(-1px);
     }
+    .btn-download {
+      appearance: none;
+      border: 2px solid #e5e5e5;
+      background: white;
+      color: #1a1a1a;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-download:hover {
+      border-color: #8b5cf6;
+      background: #faf5ff;
+    }
+    #shareCard {
+      position: fixed;
+      top: -9999px;
+      left: -9999px;
+      width: 800px;
+      background: white;
+      padding: 60px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .share-card-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .share-card-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: #8b5cf6;
+      margin-bottom: 8px;
+    }
+    .share-card-portrait {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 30px;
+      border-radius: 50%;
+      border: 5px solid #8b5cf6;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      overflow: hidden;
+    }
+    .share-card-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .share-card-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #8b5cf6;
+      margin-bottom: 12px;
+    }
+    .share-card-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .share-card-copy {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .share-card-desc {
+      font-size: 16px;
+      color: #666;
+      font-style: italic;
+      line-height: 1.6;
+    }
     .outcome-note {
       background: #fef3c7;
       border-left: 4px solid #f59e0b;
@@ -302,7 +380,12 @@
       </div>
 
       <div id="outcomeScreen" class="outcome-screen" style="display:none;">
-        <div class="outcome-badge">Your EU Strategy Spirit Animal</div>
+        <div class="outcome-badge">Your EU Strategy Archetype</div>
+        
+        <div class="portrait-container" id="portraitContainer">
+          <span class="portrait-placeholder">👤</span>
+        </div>
+        
         <div class="spirit-animal" id="spiritName"></div>
         <div class="spirit-desc" id="spiritDesc"></div>
         
@@ -314,6 +397,9 @@
           <div class="share-buttons">
             <button class="btn-share" onclick="shareLinkedIn()">
               <span>Share on LinkedIn</span>
+            </button>
+            <button class="btn-download" onclick="downloadImage()">
+              📥 Download Image
             </button>
             <button class="btn-secondary" onclick="copyResult()">
               📋 Copy Text
@@ -328,153 +414,189 @@
     </div>
   </div>
 
+  <!-- Hidden element for share card generation -->
+  <div id="shareCard">
+    <div class="share-card-header">
+      <div class="share-card-logo">Big Greenland Energy™</div>
+    </div>
+    <div class="share-card-portrait" id="sharePortrait">👤</div>
+    <div class="share-card-name" id="shareName"></div>
+    <div class="share-card-title" id="shareTitle"></div>
+    <div class="share-card-copy" id="shareCopy"></div>
+    <div class="share-card-desc" id="shareDesc"></div>
+  </div>
+
   <button id="backBtn" class="btn-back" style="display:none;" onclick="goBack()">← Back</button>
 
   <script>
     const OUTCOME_COPY = {
       "Sanctions Maximalism": {
         title: "Sanctions Maximalism",
-        copy: `Economic pain is a universal language. Apply liberally.`,
+        copy: `Why target individuals when you can crater an entire economy? Go big or go home, and make sure the IMF has the numbers ready for your press conference.`,
         spirit: "Catherine Ashton",
-        spiritDesc: "EU's first High Representative who oversaw the Iran sanctions regime — patient, methodical, believed economic pressure could change regimes"
+        spiritDesc: "EU's first High Representative who oversaw the Iran sanctions regime—patient, methodical, believed economic pressure could change regimes",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Baroness_Ashton_of_Upholland%2C_Brussels_2012.jpg/440px-Baroness_Ashton_of_Upholland%2C_Brussels_2012.jpg"
       },
       "Targeted Sanctions Realism": {
         title: "Targeted Sanctions Realism",
-        copy: `Sanctions, but with a PowerPoint showing we thought about it.`,
+        copy: `Sanctions work best when accompanied by a 40-slide deck explaining the methodology, complete with appendices on asset freezing procedures and a FAQ section.`,
         spirit: "Javier Solana",
-        spiritDesc: "Former EU High Representative who pioneered 'smart sanctions'— diplomatic, measured, always with a technical briefing ready"
+        spiritDesc: "Former EU High Representative who pioneered 'smart sanctions'—diplomatic, measured, always with a technical briefing ready",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Javier_Solana_2008.jpg/440px-Javier_Solana_2008.jpg"
       },
       "Trade Retaliation": {
         title: "Trade Retaliation",
-        copy: `He does tariffs? We do tariffs. Equilibrium through mutual suffering.`,
+        copy: `Match his tariffs dollar for dollar, make sure your retaliation hits swing states, and schedule the announcement for maximum cable news coverage. Equilibrium through spite.`,
         spirit: "Cecilia Malmström",
-        spiritDesc: "EU Trade Commissioner who faced down Trump's steel tariffs — direct, unafraid of trade wars, believed in reciprocal measures"
+        spiritDesc: "EU Trade Commissioner who faced down Trump's steel tariffs—direct, unafraid of trade wars, believed in reciprocal measures",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Cecilia_Malmstr%C3%B6m_2015.jpg/440px-Cecilia_Malmstr%C3%B6m_2015.jpg"
       },
       "Anti-Coercion Instrument": {
         title: "Anti-Coercion Instrument Enthusiast",
-        copy: `We passed a regulation for this in 2023! (checks notes) Now what?`,
+        copy: `The EU literally passed this regulation in 2023 for exactly this type of situation, so now we just need six months of inter-service consultations to figure out how to activate it.`,
         spirit: "Valdis Dombrovskis",
-        spiritDesc: "Executive VP who champions EU economic sovereignty tools — regulation-first, believes every challenge needs a legal instrument"
+        spiritDesc: "Executive VP who champions EU economic sovereignty tools—regulation-first, believes every challenge needs a legal instrument",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Valdis_Dombrovskis_2023.jpg/440px-Valdis_Dombrovskis_2023.jpg"
       },
       "NATO Expansion Logic": {
         title: "NATO Expansion Logic",
-        copy: `Greenland joins NATO. Problem becomes someone else's problem.`,
+        copy: `Turn every problem into a collective defense issue and let Article 5 do the heavy lifting. Greenland joins NATO, Denmark invokes Article 5, Trump becomes everyone's problem. Beautiful.`,
         spirit: "Carl Bildt",
-        spiritDesc: "Swedish PM who championed Baltic NATO membership — security maximalist, Article 5 solves most problems"
+        spiritDesc: "Swedish PM who championed Baltic NATO membership—security maximalist, Article 5 solves most problems",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Carl_Bildt_2015.jpg/440px-Carl_Bildt_2015.jpg"
       },
       "Joint Defence Proposal": {
         title: "Joint Defence Proposal",
-        copy: `Nordic flags on boats. Coordinated press releases. Deterrence achieved.`,
+        copy: `Get the Nordics in a room, draft a joint statement about shared sovereignty and security cooperation, add some ships to a map, and call it deterrence. Coordination is 90% of defense anyway.`,
         spirit: "Federica Mogherini",
-        spiritDesc: "High Representative who launched PESCO—multilateral defence believer, coordination over confrontation"
+        spiritDesc: "High Representative who launched PESCO—multilateral defence believer, coordination over confrontation",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Federica_Mogherini_Official.jpg/440px-Federica_Mogherini_Official.jpg"
       },
       "Military Deterrence (Implicit)": {
         title: "Military Deterrence (Implicit)",
-        copy: `Send a frigate. Don't explain why. Let implications linger.`,
+        copy: `Move some assets around, don't explain what they're doing there, and let the Atlantic Council write 8,000 words analyzing your intentions. Ambiguity is the deterrent.`,
         spirit: "Michel Barnier",
-        spiritDesc: "Brexit negotiator known for strategic silence—actions speak louder, mastered the art of calculated presence"
+        spiritDesc: "Brexit negotiator known for strategic silence—actions speak louder, mastered the art of calculated presence",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Michel_Barnier_2019.jpg/440px-Michel_Barnier_2019.jpg"
       },
       "International Law Invocation": {
         title: "International Law Invocation",
-        copy: `The 1933 Montevideo Convention has entered the chat.`,
+        copy: `Actually, the 1933 Montevideo Convention is quite explicit about territorial sovereignty, and if you read the Vienna Convention alongside the UN Charter, it's clear that—sorry, did I lose you at Montevideo?`,
         spirit: "Margrethe Vestager",
-        spiritDesc: "Competition Commissioner who weaponized EU law—rules-based warrior, cites legal frameworks like others breathe"
+        spiritDesc: "Competition Commissioner who weaponized EU law—rules-based warrior, cites legal frameworks like others breathe",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Margrethe_Vestager_2023.jpg/440px-Margrethe_Vestager_2023.jpg"
       },
       "Multilateralisation": {
         title: "Multilateralisation",
-        copy: `Can't solve it alone? Add 47 stakeholders and a steering committee.`,
+        copy: `Why solve something with 27 member states when you can bring in the UN, WTO, OECD, and potentially create an Arctic Council subcommittee? More stakeholders, more legitimacy, more conference calls.`,
         spirit: "Herman Van Rompuy",
-        spiritDesc: "First EU Council President — consensus builder, believed every crisis needed more chairs at the table"
+        spiritDesc: "First EU Council President—consensus builder, believed every crisis needed more chairs at the table",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Herman_Van_Rompuy_2010.jpg/440px-Herman_Van_Rompuy_2010.jpg"
       },
       "Procedural Delay": {
         title: "Procedural Delay",
-        copy: `Schedule a working group to assess the feasibility of a review process.`,
+        copy: `Schedule a scoping meeting to determine if we need a working group to assess whether a task force should examine the possibility of a review. Due process takes time, and time is strategy.`,
         spirit: "Jean-Claude Juncker",
-        spiritDesc: "Commission President and Luxembourg PM — master of 'strategic patience,' every decision needs another working group"
+        spiritDesc: "Commission President and Luxembourg PM—master of 'strategic patience,' every decision needs another working group",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Jean-Claude_Juncker_2016.jpg/440px-Jean-Claude_Juncker_2016.jpg"
       },
       "New Framework Creation": {
         title: "New Framework Creation",
-        copy: `Launch the EU-Arctic-Atlantic Strategic Dialogue Mechanism. With a logo.`,
+        copy: `Launch the EU-Arctic-Atlantic Strategic Dialogue Mechanism with a proper acronym, secretariat, and quarterly ministerials. Every crisis deserves its own institutional architecture, preferably with a Brussels office.`,
         spirit: "Jacques Delors",
-        spiritDesc: "Commission President who built the Single Market—institution builder extraordinaire, never met a mechanism he didn't create"
+        spiritDesc: "Commission President who built the Single Market—institution builder extraordinaire, never met a mechanism he didn't create",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Jacques_Delors_-_Flickr_-_The_Official_CTBTO_Photostream.jpg/440px-Jacques_Delors_-_Flickr_-_The_Official_CTBTO_Photostream.jpg"
       },
       "Quiet Diplomacy": {
         title: "Quiet Diplomacy",
-        copy: `Back channels. Closed doors. Zero tweets. Pure vibes.`,
+        copy: `Handle this through back channels, bilateral consultations, and off-the-record assurances, then give a press conference where you explain at length why you can't discuss what you discussed.`,
         spirit: "Martti Ahtisaari",
-        spiritDesc: "Finnish President and peace mediator—back-channel specialist, Nobel laureate of silent diplomacy"
+        spiritDesc: "Finnish President and peace mediator—back-channel specialist, Nobel laureate of silent diplomacy",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Martti_Ahtisaari_2008.jpg/440px-Martti_Ahtisaari_2008.jpg"
       },
       "Strategic Ambiguity": {
         title: "Strategic Ambiguity",
-        copy: `"All options remain on the table." (There are no options.)`,
+        copy: `"All options remain on the table" is a complete sentence and a complete strategy. Let people guess which options, whether you have options, or if there even is a table.`,
         spirit: "Wolfgang Schäuble",
-        spiritDesc: "German Finance Minister during Eurocrisis — master of meaningful silence, never confirmed, never denied"
+        spiritDesc: "German Finance Minister during Eurocrisis—master of meaningful silence, never confirmed, never denied",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/2018-03-12_Unterzeichnung_des_Koalitionsvertrages_der_19._Wahlperiode_des_Bundestages_by_Sandro_Halank%E2%80%93049.jpg/440px-2018-03-12_Unterzeichnung_des_Koalitionsvertrages_der_19._Wahlperiode_des_Bundestages_by_Sandro_Halank%E2%80%93049.jpg"
       },
       "Transactional Bargaining": {
         title: "Transactional Bargaining",
-        copy: `He wants Greenland? Offer him a trade deal and change the subject.`,
+        copy: `He wants Greenland? Offer him a trade deal on soybeans, a summit photo-op, and some vague language about security cooperation. Then change the subject before he notices we didn't give him Greenland.`,
         spirit: "Viktor Orbán",
-        spiritDesc: "Hungarian PM who mastered EU horse-trading—everything is negotiable, loyalty has a price"
+        spiritDesc: "Hungarian PM who mastered EU horse-trading—everything is negotiable, loyalty has a price",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Orb%C3%A1n_Viktor_minisztereln%C3%B6k.jpg/440px-Orb%C3%A1n_Viktor_minisztereln%C3%B6k.jpg"
       },
       "Grand Bargain": {
         title: "Grand Bargain",
-        copy: `Bundle Greenland with Ukraine, climate commitments, trade disputes, and that thing about the WTO appellate body into one comprehensive package deal. Either solve everything or solve nothing — there is no middle ground.`,
+        copy: `Bundle Greenland with Ukraine, climate commitments, trade disputes, and that thing about the WTO appellate body into one comprehensive package deal. Either solve everything at once or solve nothing—there is no middle ground.`,
         spirit: "Angela Merkel",
-        spiritDesc: "German Chancellor who bundled crises into comprehensive solutions — package deal architect, thought in systems not issues"
+        spiritDesc: "German Chancellor who bundled crises into comprehensive solutions—package deal architect, thought in systems not issues",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/2021-12-08_Unterzeichnung_des_Koalitionsvertrages_der_20._Wahlperiode_des_Bundestages_1DX_4237_by_Stepro.jpg/440px-2021-12-08_Unterzeichnung_des_Koalitionsvertrages_der_20._Wahlperiode_des_Bundestages_1DX_4237_by_Stepro.jpg"
       },
       "De-escalation First": {
         title: "De-escalation Doctrine",
-        copy: `Lower the temperature by... being calm? And reasonable? Surely that works.`,
+        copy: `Lower the temperature through measured responses, calm rhetoric, and rational dialogue, secure in the knowledge that being reasonable has definitely worked on Donald Trump in the past.`,
         spirit: "Frank-Walter Steinmeier",
-        spiritDesc: "German Foreign Minister known for patient dialogue — tone matters, believed calm rationality wins eventually"
+        spiritDesc: "German Foreign Minister known for patient dialogue—tone matters, believed calm rationality wins eventually",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Bundespr%C3%A4sident_Steinmeier_%28cropped%29.jpg/440px-Bundespr%C3%A4sident_Steinmeier_%28cropped%29.jpg"
       },
       "Democratic Deliberation": {
         title: "Democratic Deliberation",
-        copy: `Convene a citizens' assembly. Report back in 18 months. Perhaps 24.`,
+        copy: `Convene a citizens' assembly, ensure proper regional representation, live-stream the proceedings, and reconvene in 18 months with a 300-page report. Democracy takes time and we have time.`,
         spirit: "Valéry Giscard d'Estaing",
-        spiritDesc: "French President who led the Constitutional Convention—democratic process purist, legitimacy through deliberation"
+        spiritDesc: "French President who led the Constitutional Convention—democratic process purist, legitimacy through deliberation",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Val%C3%A9ry_Giscard_d%27Estaing_1978.jpg/440px-Val%C3%A9ry_Giscard_d%27Estaing_1978.jpg"
       },
       "Greenland Self-Determination": {
         title: "Greenland Self-Determination",
-        copy: `Revolutionary idea: ask the Greenlanders. (But maybe after a few EU Council meetings where we align our position on what their self-determination should look like.)`,
+        copy: `Center Greenlandic voices in this conversation about Greenland's future—but maybe after a few EU Council meetings where we align our position on what their self-determination should look like.`,
         spirit: "Bertie Ahern",
-        spiritDesc: "Irish PM during Good Friday Agreement — self-determination champion, believed affected populations should decide"
+        spiritDesc: "Irish PM during Good Friday Agreement—self-determination champion, believed affected populations should decide",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Bertie_Ahern_2007.jpg/440px-Bertie_Ahern_2007.jpg"
       },
       "Values-Based Response": {
         title: "Values-Based Response",
-        copy: `Act with dignity, principle, and the moral high ground. Feel good regardless of outcome.`,
+        copy: `Respond with dignity, reaffirm our commitment to the rules-based international order, and take the moral high ground so decisively that it doesn't matter what the actual outcome is. We'll feel good about ourselves.`,
         spirit: "Ursula von der Leyen",
-        spiritDesc: "Commission President who leads with values rhetoric — 'geopolitical Commission' believer, principles over pragmatism (but keep them flexible)"
+        spiritDesc: "Commission President who leads with values rhetoric—'geopolitical Commission' believer, principles over pragmatism",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Ursula_von_der_Leyen_2019.jpg/440px-Ursula_von_der_Leyen_2019.jpg"
       },
       "Norm-Setting": {
         title: "Norm-Setting",
-        copy: `Respond so correctly that future autocrats take notes and reconsider.`,
+        copy: `Respond so correctly, so proportionally, and so obviously in line with international law that future autocrats will study this as the textbook example of how democracies handle territorial coercion. Precedent is everything.`,
         spirit: "Joschka Fischer",
-        spiritDesc: "German Foreign Minister who championed Kosovo intervention—principled response setter, today's action is tomorrow's precedent"
+        spiritDesc: "German Foreign Minister who championed Kosovo intervention—principled response setter, today's action is tomorrow's precedent",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Joschka_Fischer_Headshot.jpg/440px-Joschka_Fischer_Headshot.jpg"
       },
       "Ignore It": {
         title: "Ignore It",
-        copy: `Do not feed the troll. Hope the problem goes away. Cold today, isn't it?`,
+        copy: `Do not engage. Do not respond. Starve it of oxygen and attention. Then spend the next three weeks explaining to journalists why you're not responding and what that non-response signals.`,
         spirit: "Mario Draghi",
-        spiritDesc: "ECB President who famously said he'd do 'whatever it takes' then... waited — strategic non-response master"
+        spiritDesc: "ECB President who famously said he'd do 'whatever it takes' then... waited—strategic non-response master",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Mario_Draghi_2019.jpg/440px-Mario_Draghi_2019.jpg"
       },
       "Wait It Out": {
         title: "Wait It Out",
-        copy: `Four years (or more) is nothing in geological time. Or trade policy.`,
+        copy: `Four years is nothing in the grand sweep of European history. We've waited out the Romans, we can wait out a single presidential term. Time is on our side, assuming nothing else happens.`,
         spirit: "Helmut Kohl",
-        spiritDesc: "German Chancellor who outlasted everyone; patience incarnate, reunification came to those who waited"
+        spiritDesc: "German Chancellor who outlasted everyone—patience incarnate, reunification came to those who waited",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Helmut_Kohl_1989.jpg/440px-Helmut_Kohl_1989.jpg"
       },
       "Reframe the Issue": {
         title: "Reframe the Issue",
-        copy: `This is actually about climate/China/Arctic shipping. Greenland is a metaphor [scratch chin, frown, look up].`,
+        copy: `This isn't really about Greenland—it's about rare earth minerals, Chinese influence in the Arctic, climate security, and the future of transatlantic relations. Once you see the real issue, the response writes itself.`,
         spirit: "Emmanuel Macron",
-        spiritDesc: "French President who reframes everything as 'strategic autonomy'—never takes issues at face value, always finds the deeper meaning"
+        spiritDesc: "French President who reframes everything as 'strategic autonomy'—never takes issues at face value, always finds the deeper meaning",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Emmanuel_Macron_2019.jpg/440px-Emmanuel_Macron_2019.jpg"
       },
       "Out-Message It": {
         title: "Out-Message It",
-        copy: `We're losing the narrative. Deploy better infographics.`,
+        copy: `We're losing the narrative war, so deploy better talking points, sharper infographics, and a coordinated communications strategy across all channels. If we can't win the policy fight, at least win the Twitter fight.`,
         spirit: "Tony Blair",
-        spiritDesc: "UK PM who mastered New Labour messaging — narrative is reality, presentation beats policy, third way communicator"
+        spiritDesc: "UK PM who mastered New Labour messaging—narrative is reality, presentation beats policy, third way communicator",
+        portrait: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Tony_Blair_2010.jpg/440px-Tony_Blair_2010.jpg"
       }
     };
 
@@ -638,12 +760,14 @@
     const $outcomeCopy = document.getElementById("outcomeCopy");
     const $spiritName = document.getElementById("spiritName");
     const $spiritDesc = document.getElementById("spiritDesc");
+    const $portraitContainer = document.getElementById("portraitContainer");
     const $progressBar = document.getElementById("progressBar");
     const $backBtn = document.getElementById("backBtn");
 
     function startQuiz() {
       $startScreen.style.display = "none";
       $quizScreen.style.display = "block";
+      $quizScreen.classList.add("fade-in");
       $backBtn.style.display = "block";
       render();
     }
@@ -659,14 +783,14 @@
       $question.textContent = node.question;
       
       // Update progress
-      const totalQuestions = 10; // approximate max
+      const totalQuestions = 10;
       const progress = Math.min((history.length / totalQuestions) * 100, 90);
       $progressBar.style.width = progress + '%';
 
       $answers.innerHTML = "";
       node.answers.forEach(ans => {
         const btn = document.createElement("button");
-        btn.className = "answer-btn";
+        btn.className = "answer-btn slide-in";
         btn.textContent = ans.label;
         btn.onclick = () => selectAnswer(ans);
         $answers.appendChild(btn);
@@ -690,15 +814,52 @@
     function showOutcome() {
       $quizScreen.style.display = "none";
       $outcomeScreen.style.display = "block";
+      $outcomeScreen.classList.add("fade-in");
       $backBtn.style.display = "none";
       $progressBar.style.width = "100%";
 
       const data = OUTCOME_COPY[outcome];
       
+      // Update portrait
+      $portraitContainer.innerHTML = `<img src="${data.portrait}" alt="${data.spirit}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'portrait-placeholder\\'>👤</span>'">`;
+      
       $spiritName.textContent = data.spirit;
       $spiritDesc.textContent = data.spiritDesc;
       $outcomeTitle.textContent = data.title;
       $outcomeCopy.textContent = data.copy;
+    }
+
+    async function downloadImage() {
+      const data = OUTCOME_COPY[outcome];
+      
+      // Populate share card
+      const sharePortrait = document.getElementById("sharePortrait");
+      sharePortrait.innerHTML = `<img src="${data.portrait}" alt="${data.spirit}" onerror="this.style.display='none'; this.parentElement.innerHTML='👤'">`;
+      document.getElementById("shareName").textContent = data.spirit;
+      document.getElementById("shareTitle").textContent = data.title;
+      document.getElementById("shareCopy").textContent = data.copy;
+      document.getElementById("shareDesc").textContent = data.spiritDesc;
+      
+      // Use html2canvas library
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      script.onload = async () => {
+        const card = document.getElementById('shareCard');
+        const canvas = await html2canvas(card, {
+          backgroundColor: '#ffffff',
+          scale: 2
+        });
+        
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${data.spirit.replace(/\s+/g, '-')}-greenland-result.png`;
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+      };
+      document.head.appendChild(script);
     }
 
     function shareLinkedIn() {
@@ -715,7 +876,7 @@ What's your Greenland solution? Take the quiz: [your-url-here]
 
 #BigGreenlandEnergy #EUStrategy #Geopolitics`;
       
-      const linkedInUrl = `https://www.youtube.com/watch?v=j13oJajXx0M`;
+      const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
       window.open(linkedInUrl, '_blank');
       
       // Copy text to clipboard for easy pasting
